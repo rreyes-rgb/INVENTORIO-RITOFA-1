@@ -441,13 +441,15 @@ function paintMarkers(){
 }
 // pointer handling
 const ptrs=new Map(); let gest=null;
-wrap.addEventListener("pointerdown",e=>{ wrap.setPointerCapture(e.pointerId); ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+const TAP_SLOP=()=>Math.max(12,Math.min(innerWidth,innerHeight)*0.018); let tapCand=null, lastPtrDown=0, lastTapDone=0;
+wrap.addEventListener("pointerdown",e=>{ lastPtrDown=Date.now(); try{wrap.setPointerCapture(e.pointerId);}catch(_){} ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===1) tapCand={id:e.pointerId,x:e.clientX,y:e.clientY,t:Date.now(),s:pz.s,bad:false};
   if(ptrs.size===1) gest={type:"pan",sx:e.clientX,sy:e.clientY,ox:pz.x,oy:pz.y,t:Date.now(),moved:false};
   else if(ptrs.size===2){ const [a,b]=[...ptrs.values()]; gest={type:"pinch",d:Math.hypot(a.x-b.x,a.y-b.y),s:pz.s,ox:pz.x,oy:pz.y,cx:(a.x+b.x)/2,cy:(a.y+b.y)/2,moved:true}; }
 });
-wrap.addEventListener("pointermove",e=>{ if(!ptrs.has(e.pointerId)||!gest) return; ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+wrap.addEventListener("pointermove",e=>{ if(tapCand&&e.pointerId===tapCand.id&&Math.abs(e.clientX-tapCand.x)+Math.abs(e.clientY-tapCand.y)>TAP_SLOP()) tapCand.bad=true; if(!ptrs.has(e.pointerId)||!gest) return; ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
   const R=wrap.getBoundingClientRect();
-  if(gest.type==="pan"&&ptrs.size===1){ const dx=e.clientX-gest.sx, dy=e.clientY-gest.sy; if(Math.abs(dx)+Math.abs(dy)>7) gest.moved=true;
+  if(gest.type==="pan"&&ptrs.size===1){ const dx=e.clientX-gest.sx, dy=e.clientY-gest.sy; if(Math.abs(dx)+Math.abs(dy)>TAP_SLOP()) gest.moved=true;
     pz.x=gest.ox+dx; pz.y=gest.oy+dy; clamp(); apply(); }
   else if(gest.type==="pinch"&&ptrs.size===2){ const [a,b]=[...ptrs.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y);
     const ns=Math.min(pz.max,Math.max(pz.min,gest.s*d/gest.d)); const k=ns/gest.s; const cx=gest.cx-R.left, cy=gest.cy-R.top;
@@ -456,15 +458,21 @@ wrap.addEventListener("pointermove",e=>{ if(!ptrs.has(e.pointerId)||!gest) retur
 });
 let lastTap=0;
 function endPtr(e){ if(!ptrs.has(e.pointerId)) return; ptrs.delete(e.pointerId);
-  if(gest&&gest.type==="pan"&&!gest.moved&&Date.now()-gest.t<450&&e.type==="pointerup"){
-    const R=wrap.getBoundingClientRect(); const cx=e.clientX-R.left, cy=e.clientY-R.top;
-    const now=Date.now();
-    if(!tapUnit(cx,cy)){ if(now-lastTap<320){ zoomAt(2,cx,cy); lastTap=0; } else lastTap=now; }
+  if(e.type==="pointercancel"&&tapCand) tapCand.bad=true;
+  if(ptrs.size===0&&tapCand&&!tapCand.bad){
+    const c=tapCand; tapCand=null; const now=Date.now();
+    if(Math.abs(pz.s/c.s-1)<0.04&&now-c.t<1500){
+      const R=wrap.getBoundingClientRect(); const cx=c.x-R.left, cy=c.y-R.top; lastTapDone=now;
+      if(!tapUnit(cx,cy)){ if(now-lastTap<350){ zoomAt(2,cx,cy); lastTap=0; } else lastTap=now; }
+    }
   }
+  if(ptrs.size===0) tapCand=null;
   if(ptrs.size===1){ const [a]=[...ptrs.values()]; gest={type:"pan",sx:a.x,sy:a.y,ox:pz.x,oy:pz.y,t:0,moved:true}; }
   else if(ptrs.size===0) gest=null;
 }
 wrap.addEventListener("pointerup",endPtr); wrap.addEventListener("pointercancel",endPtr);
+// respaldo para pantallas táctiles que no envían pointer events (MAXHUB / navegadores antiguos)
+wrap.addEventListener("click",e=>{ if(Date.now()-lastPtrDown<1500||Date.now()-lastTapDone<800) return; const R=wrap.getBoundingClientRect(); tapUnit(e.clientX-R.left,e.clientY-R.top); });
 wrap.addEventListener("wheel",e=>{e.preventDefault(); const R=wrap.getBoundingClientRect(); zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX-R.left,e.clientY-R.top);},{passive:false});
 $("zIn").onclick=()=>zoomAt(1.6,wrap.clientWidth/2,wrap.clientHeight/2);
 $("zOut").onclick=()=>zoomAt(1/1.6,wrap.clientWidth/2,wrap.clientHeight/2);
@@ -473,7 +481,7 @@ $("zFit").onclick=()=>{ const W=wrap.clientWidth,H=wrap.clientHeight; pz.s=pz.mi
 window.addEventListener("resize",()=>{ if(curPlan&&view==="plano"){ const was=pz.s<=pz.min*1.01; if(was) fit(); else {clamp();apply();} }});
 
 function tapUnit(cx,cy){
-  const ix=(cx-pz.x)/pz.s, iy=(cy-pz.y)/pz.s; const tol=14/pz.s; // finger tolerance in image px
+  const ix=(cx-pz.x)/pz.s, iy=(cy-pz.y)/pz.s; const tol=24/pz.s; // finger tolerance in image px
   let best=null,bd=1e9;
   for(const u of P.units){ if(u.plano!==curPlan.key) continue;
     const dx=Math.max(u.x-ix,0,ix-(u.x+u.w)), dy=Math.max(u.y-iy,0,iy-(u.y+u.h)); const d=Math.hypot(dx,dy);
@@ -493,7 +501,7 @@ function focusUnit(u,open){
 
 /* ---------- ficha ---------- */
 function openFicha(u,fromList){
-  curUnit=u; plazoMax=plazoActual(u.plazo_base); plazoAdj=plazoMax;
+  fichaOpenedAt=Date.now(); curUnit=u; plazoMax=plazoActual(u.plazo_base); plazoAdj=plazoMax;
   $("fTags").innerHTML=`<span class="tag ok">Disponible</span>`+(u.tag?`<span class="tag">${u.tag}</span>`:"")+(u.chip?`<span class="tag">${u.chip}</span>`:"");
   $("fWord").innerHTML=`${P.nombre}<small>${P.kind}</small>`;
   $("fId").textContent=(P.prefijo||"")+u.num; $("fSub").textContent=u.sub;
@@ -528,7 +536,9 @@ function renderPay(){
 const pc=v=>Math.round(v*100)+"%";
 function closeFicha(){ $("fichaOv").classList.remove("open"); curUnit=null; if(view==="plano") paintMarkers(); }
 $("btnClose").onclick=closeFicha;
-$("fichaOv").addEventListener("click",e=>{ if(e.target.id==="fichaOv") closeFicha(); });
+// el toque que abre la ficha genera un "click" fantasma sobre el fondo oscuro: ignorarlo
+let fichaOpenedAt=0;
+$("fichaOv").addEventListener("click",e=>{ if(e.target.id==="fichaOv"&&Date.now()-fichaOpenedAt>600) closeFicha(); });
 $("btnVerPlano").onclick=()=>{ const u=curUnit; closeFicha(); focusUnit(u,false); };
 
 /* share */
