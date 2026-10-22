@@ -23,9 +23,9 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   <div class="hero">
     <div class="pn green">
       <img class="logo" src="${I.logo}" alt="Aires Este">
-      <div class="k sk">Cotización · ${e(c.numero)}</div>
+      <div class="k sk">COTIZACIÓN · ${e(c.numero)}</div>
       <h1>AIRES ESTE<br>TOWN CENTER</h1>
-      <div class="loc cd">Km 6.8 Vía La Puntilla · Samborondón</div>
+      <div class="loc cd">km 6.8 Vía La Puntilla · Samborondón</div>
     </div>
     <div class="ph"><img src="${I.hero}" alt="Aires Este Town Center"></div>
   </div>
@@ -60,12 +60,12 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
       <div>
         <div class="sk" style="font-size:7.4pt;color:var(--v);margin-bottom:6px">Town Center</div>
         <ol class="nl">
-          <li><i>01</i>Plaza de ingreso</li><li><i>02</i>Plaza de la fuente</li><li><i>03</i>Control de acceso residencial</li><li><i>04</i>Flex building - comercios en PB</li><li><i>05</i>Supermercado</li><li><i>06</i>Ingresos a parqueos</li><li><i>07</i>Paseo comercial y gastronómico</li><li><i>08</i>Av. León Febres Cordero</li><li><i>09</i>Vía a Av. Samborondón</li><li><i>10</i>Vía a Centro Médico Samborondón</li><li><i>11</i>Ingreso de servicio</li><li><i>12</i>Parqueos</li><li><i>13</i>Ingreso a parqueo subterráneo</li><li><i>14</i>Fuente interactiva</li><li><i>15</i>Gazebos de la plaza</li><li><i>16</i>Baños públicos</li>
+          <li><i>01</i>Plaza de ingreso</li><li><i>02</i>Plaza de la fuente</li><li><i>03</i>Control de acceso residencial</li><li><i>04</i>Flex building (comercios en planta baja)</li><li><i>05</i>Supermercado</li><li><i>06</i>Ingresos a parqueos</li><li><i>07</i>Paseo comercial y gastronómico</li><li><i>08</i>Av. León Febres Cordero</li><li><i>09</i>Vía a la Av. Samborondón</li><li><i>10</i>Vía al Centro Médico Samborondón</li><li><i>11</i>Ingreso de servicio</li><li><i>12</i>Parqueos</li><li><i>13</i>Ingreso a parqueo subterráneo</li><li><i>14</i>Fuente interactiva</li><li><i>15</i>Gazebos de la plaza</li><li><i>16</i>Baños públicos</li>
         </ol>
       </div>
     </div>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Este Town Center<br>Km 6.8 Vía La Puntilla · Samborondón</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Este Town Center<br>km 6.8 Vía La Puntilla · Samborondón</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
 </section>
 <section class="page">
   <div class="bar light"><img src="${I.logoDark}" alt="Aires Este"><div class="r sk">${e(ed)} · ${e(multi?'Oficinas '+nums.join(', '):'Oficina '+nums[0])} · ${e(c.numero)}</div></div>
@@ -78,11 +78,11 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="st" style="margin-top:14px"><img src="${I.icon}" alt=""><h2>Condiciones generales</h2></div>
     <div class="cond light">
       <ul>
-        <li>Valores en dólares de los EE.UU. a precio de lista vigente a la fecha, sujetos a cambio sin previo aviso. No incluyen IVA ni gastos notariales, de escrituración o de registro.</li>
+        <li>Valores en dólares de los EE. UU. a precio de lista vigente a la fecha de esta cotización, sujetos a cambio sin previo aviso. No incluyen IVA ni gastos notariales, de escrituración o de registro.</li>
         <li>La disponibilidad de la unidad queda sujeta a confirmación al momento de la reserva.</li>
         <li>Las áreas son referenciales y se ajustarán a las de los planos aprobados y la declaratoria de propiedad horizontal.</li>
         <li>La venta se perfecciona mediante promesa de compraventa y posterior escritura pública.</li>
-        <li>Imágenes, implantaciones y plantas de carácter referencial, sujetas a ajustes técnicos o de diseño.</li>
+        <li>Las imágenes, implantaciones y plantas son referenciales y están sujetas a ajustes técnicos o de diseño.</li>
         <li>Documento informativo; no constituye oferta vinculante. Asesor/a: ${e(c.asesor||'-')}.</li>
       </ul>
     </div>
@@ -90,6 +90,6 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   <div class="back green">
     <img src="${I.logo}" alt="Aires Este">
     <div class="lg"><img src="${I.ritofa2}" alt="RITOFA"><i></i><img class="bt" src="${I.batan2}" alt="Batán Proyectos Inmobiliarios"></div>
-    <div class="a">Aires Este Town Center &nbsp;|&nbsp; Km 6.8 Vía La Puntilla · Samborondón &nbsp;|&nbsp; ${e(c.numero)} · 02 / 02</div>
+    <div class="a">Aires Este Town Center &nbsp;|&nbsp; km 6.8 Vía La Puntilla · Samborondón &nbsp;|&nbsp; ${e(c.numero)} · 02 / 02</div>
   </div>
 </section>`; }};
