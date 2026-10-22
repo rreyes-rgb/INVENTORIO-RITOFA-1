@@ -17,7 +17,6 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   <p class="ppn">La entrada a financiar se cancela en <b>${cuotas} cuota${cuotas>1?'s':''} mensual${cuotas>1?'es':''} de ${$(P*PG.saldo_entrada/cuotas)}</b>, a partir del mes siguiente a la firma de la promesa de compraventa.</p>`;
 
   const filas=c.u.map(u=>`<tr><td>${e(u.num)}</td><td class="r">${n2(u.m2)}</td><td class="r">${u.m2_balcon?n2(u.m2_balcon):(u.m2_terraza?n2(u.m2_terraza)+' (terraza)':'—')}</td><td class="r">${$(u.precio)}</td></tr>`).join('');
-  const afil=(c.t.m2+c.t.m2_balcon)*30, ali=(c.t.m2+c.t.m2_balcon)*5.5;
   return `
 <section class="page">
   <div class="hero">
@@ -26,7 +25,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="in">
       <img class="logo" src="${I.logo}" alt="Batán Business Park">
       <div class="ref cap">REF · ${e(c.numero)}<br>${e(c.mes)}</div>
-      <div class="kick cap">Cotización · ${e(c.numero)}</div>
+      <div class="kick cap">COTIZACIÓN · ${e(c.numero)}</div>
       <h1>${multi?c.n+' oficinas':'Oficina '+e(nums[0])}<br><em>${e(pisoTxt)} · ${e(torre)}</em></h1>
       <div class="for">Preparada para <b>${e(c.cli.nombre)}</b></div>
     </div>
@@ -46,11 +45,11 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="c"><div class="l">Correo</div><div class="v">${e(c.cli.correo)}</div></div>
   </div>
   <div class="body">
-    <p class="intro">Estimado/a ${e(c.cli.nombre)}: presentamos la cotización de ${multi?c.n+' oficinas contiguas':'la oficina '+e(nums[0])} en el ${e(pisoTxt.toLowerCase())} de Batán Business Park, ${e(torre)}, con valores de la lista de precios vigente.</p>
+    <p class="intro">Estimado/a ${e(c.cli.nombre)}:<br>Presentamos la cotización de ${multi?c.n+' oficinas contiguas':'la oficina '+e(nums[0])} en el ${e(pisoTxt.toLowerCase())} de Batán Business Park, ${e(torre)}, con valores de la lista de precios vigente.</p>
     <h2>Ficha de la ${multi?'propuesta':'oficina'}</h2>
     <table class="ficha"><tbody>
       <tr><td class="k">Proyecto</td><td class="v">Batán Business Park</td><td class="k">Promotora</td><td class="v">TECHCORP S.A.S.</td></tr>
-      <tr><td class="k">Ubicación</td><td class="v">Km 8.5 vía a Samborondón</td><td class="k">Nivel</td><td class="v">${e(pisoTxt)}</td></tr>
+      <tr><td class="k">Ubicación</td><td class="v">km 8.5 Vía a Samborondón</td><td class="k">Nivel</td><td class="v">${e(pisoTxt)}</td></tr>
       <tr><td class="k">${multi?'Oficinas':'Oficina'}</td><td class="v">${e(nums.join(', '))}</td><td class="k">Área de oficina${multi?'s':''}</td><td class="v">${n2(c.t.m2)} m²</td></tr>
       <tr><td class="k">${c.t.m2_terraza?'Terraza':'Balcón'}</td><td class="v">${c.t.m2_balcon||c.t.m2_terraza?n2(c.t.m2_balcon||c.t.m2_terraza)+' m²':'No aplica'}</td><td class="k">Tipo</td><td class="v">${e(u0.tipo||'Oficina')}</td></tr>
       <tr><td class="k"></td><td class="v"></td><td class="k">Valor total</td><td class="v"><b>${$(c.t.precio)}</b></td></tr>
@@ -59,7 +58,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="plano"><img src="${c.plan}" alt="Planta" style="height:62mm;width:auto;max-width:100%"></div>
     <div class="cap-img">${e(pisoTxt)} · ${e(c.planCap||'')} resaltada${multi?'s':''}</div>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><span class="tx">Batán Business Park · Km 8.5 vía a Samborondón</span><span class="r">${e(c.numero)} · 1 / 2</span></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><span class="tx">Batán Business Park · km 8.5 Vía a Samborondón</span><span class="r">${e(c.numero)} · 1 / 2</span></div>
 </section>
 <section class="page">
   <div class="top">
@@ -71,35 +70,15 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     ${multi?`<h2>Oficinas de la cotización</h2><table class="plan"><thead><tr><th>Oficina</th><th class="r">m² oficina</th><th class="r">Balcón / terraza m²</th><th class="r">Valor</th></tr></thead><tbody>${filas}</tbody></table>`:''}
     <h2>Plan de pagos</h2>
     ${pago}
-    <div class="two">
-      <div>
-        <h2>Otras consideraciones</h2>
-        <table class="kv"><colgroup><col style="width:46%"><col></colgroup><tbody>
-          <tr><td class="k">Cuota única de afiliación</td><td class="r"><b>${$(afil)}</b></td></tr>
-          <tr><td class="k">Base: oficina${multi?'s':''} y balcones</td><td class="r">${n2(c.t.m2+c.t.m2_balcon)} m² × $30.00</td></tr>
-          <tr><td class="k">Plazo de la entrada</td><td class="r">${c.plazo} meses</td></tr>
-        </tbody></table>
-        <p class="small">La afiliación se liquida por una sola vez y no forma parte del precio del inmueble.</p>
-      </div>
-      <div>
-        <h2>Alícuota mensual estimada</h2>
-        <table class="kv"><colgroup><col style="width:46%"><col></colgroup><tbody>
-          <tr><td class="k">Oficina${multi?'s':''} y balcones</td><td class="r">${n2(c.t.m2+c.t.m2_balcon)} m² × $5.50</td></tr>
-          <tr class="t"><td class="k" style="color:var(--verde)">Total mensual estimado</td><td class="r">${$(ali)}</td></tr>
-          <tr><td class="k">Estacionamientos</td><td class="r">Según asignación</td></tr>
-        </tbody></table>
-        <p class="small">El valor definitivo lo fija la administración del condominio.</p>
-      </div>
-    </div>
     <h2>Condiciones generales</h2>
     <ul class="dots">
       <li>Valores en dólares de los Estados Unidos a precio de lista vigente, sujetos a cambio sin previo aviso.</li>
       <li>No incluyen IVA ni gastos notariales, de escrituración o de inscripción en el Registro de la Propiedad.</li>
-      <li>La reserva se formaliza con la Solicitud de Reserva y la documentación de respaldo, sujeta a revisión y aprobación.</li>
-      <li>Áreas referenciales, sujetas a planos aprobados y a la declaratoria de propiedad horizontal.</li>
-      <li>Imágenes y plantas referenciales. Documento informativo; no constituye oferta vinculante.</li>
+      <li>La reserva se formaliza con la Solicitud de Reserva y la documentación de respaldo, sujetas a revisión y aprobación.</li>
+      <li>Las áreas son referenciales y están sujetas a los planos aprobados y a la declaratoria de propiedad horizontal.</li>
+      <li>Las imágenes y plantas son referenciales. Documento informativo; no constituye oferta vinculante.</li>
       <li>Asesor/a: ${e(c.asesor||'-')}.</li>
     </ul>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><span class="tx">Batán Business Park · Km 8.5 vía a Samborondón</span><span class="r">${e(c.numero)} · 2 / 2</span></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><span class="tx">Batán Business Park · km 8.5 Vía a Samborondón</span><span class="r">${e(c.numero)} · 2 / 2</span></div>
 </section>`; }};
