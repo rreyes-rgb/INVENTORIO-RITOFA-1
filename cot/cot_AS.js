@@ -21,9 +21,9 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="shade"></div>
     <div class="in">
       <img class="logo" src="${I.logo}" alt="Aires Sur">
-      <div class="tr"><div class="a cap">Cotización · ${e(c.numero)}</div><div class="b cap">Ficha comercial de la unidad</div></div>
+      <div class="tr"><div class="a cap">COTIZACIÓN · ${e(c.numero)}</div><div class="b cap">Ficha comercial de la unidad</div></div>
       <div class="low">
-        <div class="loc cap">Aires Sur &nbsp;·&nbsp; Km 7.5 vía a Samborondón</div>
+        <div class="loc cap">Aires Sur &nbsp;·&nbsp; km 7.5 Vía a Samborondón</div>
         <h1>SOLAR <b>${e(u.num)}</b></h1>
         <div class="sub cap">${e(sector)} &nbsp;·&nbsp; Manzana ${e(mz)} &nbsp;·&nbsp; ${e(tipo)}</div>
         <div class="orn"><i></i></div>
@@ -34,7 +34,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   <div class="kpis">
     <div><div class="l cap">Área total</div><div class="v">${n2(u.m2)} m²</div><div class="s">Superficie de terreno</div></div>
     <div><div class="l cap">Precio por m²</div><div class="v">${$(u.pm2||u.precio/u.m2)}</div><div class="s">Precio de lista vigente</div></div>
-    <div><div class="l cap">Valor total</div><div class="v">${$(u.precio)}</div><div class="s">Dólares de los EE.UU. · no incluye gastos de cierre</div></div>
+    <div><div class="l cap">Valor total</div><div class="v">${$(u.precio)}</div><div class="s">Dólares de los EE. UU.; no incluye gastos de cierre</div></div>
   </div>
   <div class="cli">
     <div class="h">Datos del<br>cliente</div>
@@ -73,26 +73,26 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
       <div><img src="${I.g3}" alt="Campo deportivo"><div class="c">Campo deportivo</div></div>
     </div>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Sur · Km 7.5 vía a Samborondón<br>Cel. +593 98 844 8444 · @airessur.ec</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Sur · km 7.5 Vía a Samborondón<br>Cel. +593 98 844 8444 · @airessur.ec</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
 </section>
 <section class="page">
-  <div class="bar"><img src="${I.logo}" alt="Aires Sur"><div class="r cap">Solar ${e(u.num)} &nbsp;·&nbsp; Cotización ${e(c.numero)}</div></div>
+  <div class="bar"><img src="${I.logo}" alt="Aires Sur"><div class="r cap">Solar ${e(u.num)} &nbsp;·&nbsp; COTIZACIÓN ${e(c.numero)}</div></div>
   <div class="body" style="padding-top:20px">
     <h2>Ubicación en el masterplan</h2>
     <div class="map"><img src="${c.plan||I.masterplan}" alt="Masterplan Aires Sur"><div class="c"><span>${e(sector)} &nbsp;·&nbsp; Manzana ${e(mz)} &nbsp;·&nbsp; Solar ${e(u.num)}</span><span>Implantación referencial</span></div></div>
     <h2 style="margin-top:18px">Forma de pago</h2>
     ${pago}
     <h2 style="margin-top:18px">El proyecto</h2>
-    <p class="p"><b>Aires Sur</b> es una urbanización privada en el km 7.5 de la vía a Samborondón, entre Laguna del Sol y Aires de Batán, con 312 terrenos residenciales desde 400 m². Integra <b>lago central</b> y canal perimetral, extensas áreas verdes, <b>Club House</b> y <b>campo deportivo</b>.</p>
+    <p class="p"><b>Aires Sur</b> es una urbanización privada en el km 7.5 de la Vía a Samborondón, entre Laguna del Sol y Aires de Batán, con 312 terrenos residenciales desde 400 m². Integra <b>lago central</b> y canal perimetral, extensas áreas verdes, <b>Club House</b> y <b>campo deportivo</b>.</p>
     <h2 style="margin-top:18px">Condiciones generales</h2>
     <div class="cond">
-      <div class="it"><div class="n">01</div><div>Valores en dólares de los EE.UU. a precio de lista vigente a la fecha de esta cotización, sujetos a cambio sin previo aviso.</div></div>
+      <div class="it"><div class="n">01</div><div>Valores en dólares de los EE. UU. a precio de lista vigente a la fecha de esta cotización, sujetos a cambio sin previo aviso.</div></div>
       <div class="it"><div class="n">02</div><div>No incluyen gastos notariales, de escrituración, de registro ni impuestos aplicables.</div></div>
       <div class="it"><div class="n">03</div><div>La reserva se formaliza con la <b>Solicitud de Reserva</b> y su documentación de respaldo; la venta, mediante <b>promesa de compraventa</b> y posterior escritura pública.</div></div>
-      <div class="it"><div class="n">04</div><div>La unidad se entrega urbanizada. El adquirente se acoge a las <b>Normas Constructivas</b> y al Reglamento Interno; alícuotas y cuota de afiliación según el reglamento vigente.</div></div>
+      <div class="it"><div class="n">04</div><div>La unidad se entrega urbanizada. El adquirente se acoge a las <b>Normas Constructivas</b> y al Reglamento Interno de la urbanización.</div></div>
       <div class="it"><div class="n">05</div><div>La disponibilidad está sujeta a confirmación al momento de la reserva. Esta cotización no constituye reserva ni obligación de venta.</div></div>
     </div>
-    <p class="legal">Todas las ilustraciones son de carácter conceptual. Dimensiones y áreas son aproximadas y están sujetas a cambios sin noticia previa. Documento informativo; no constituye oferta vinculante. Asesor/a: ${e(c.asesor||'-')}.</p>
+    <p class="legal">Todas las ilustraciones son de carácter conceptual. Las dimensiones y áreas son aproximadas y están sujetas a cambios sin previo aviso. Documento informativo; no constituye oferta vinculante. Asesor/a: ${e(c.asesor||'-')}.</p>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa2}" alt="RITOFA"><i></i><img class="bt" src="${I.batan2}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Sur · Km 7.5 vía a Samborondón<br>Cel. +593 98 844 8444 · @airessur.ec</div><div class="p">02 / 02</div></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa2}" alt="RITOFA"><i></i><img class="bt" src="${I.batan2}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Aires Sur · km 7.5 Vía a Samborondón<br>Cel. +593 98 844 8444 · @airessur.ec</div><div class="p">02 / 02</div></div>
 </section>`; }};
