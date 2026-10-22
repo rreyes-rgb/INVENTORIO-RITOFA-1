@@ -19,7 +19,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   <div class="hero">
     <div class="pn green">
       <img class="logo" src="${I.logo}" alt="Aires Este">
-      <div class="k sk">Cotización · ${e(c.numero)}</div>
+      <div class="k sk">COTIZACIÓN · ${e(c.numero)}</div>
       <div class="tag"><span>Vivir</span><span>Cerca</span><span>De todo</span></div>
       <div class="u">
         <div class="cd" style="font-size:6.6pt;letter-spacing:.14em;opacity:.85">Ficha comercial de la unidad</div>
@@ -30,13 +30,13 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     </div>
     <div class="ph">
       <img src="${I.hero}" alt="Aires Este">
-      <div class="loc cd">Aires Este Residencial · Km 6.8 Vía La Puntilla, Samborondón</div>
+      <div class="loc cd">Aires Este Residencial · km 6.8 Vía La Puntilla, Samborondón</div>
     </div>
   </div>
   <div class="kpis">
     <div><div class="l">Área total</div><div class="v">${n2(u.m2)} m²</div><div class="s">Superficie de terreno</div></div>
     <div><div class="l">Precio por m²</div><div class="v">${$(u.pm2||u.precio/u.m2)}</div><div class="s">Precio de lista vigente</div></div>
-    <div><div class="l">Valor total</div><div class="v">${$(u.precio)}</div><div class="s">Dólares de los EE.UU. · no incluye gastos de cierre</div></div>
+    <div><div class="l">Valor total</div><div class="v">${$(u.precio)}</div><div class="s">Dólares de los EE. UU.; no incluye gastos de cierre</div></div>
   </div>
   <div class="cli">
     <div class="h">Datos del<br>cliente</div>
@@ -65,7 +65,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
       <div class="why">
         <div class="st"><img src="${I.icon}" alt=""><h2>Por qué Aires Este</h2></div>
         <div class="it"><i>01</i><div><div class="t">Todo a pocos pasos</div><div class="d">Town Center con paseo comercial y gastronómico y supermercado dentro de la propia urbanización.</div></div></div>
-        <div class="it"><i>02</i><div><div class="t">Club House y parque central</div><div class="d">Piscinas, gimnasio, lago y boulevard arbolado para la vida en familia.</div></div></div>
+        <div class="it"><i>02</i><div><div class="t">Club House y parque central</div><div class="d">Piscinas, gimnasio, lago y bulevar arbolado para la vida en familia.</div></div></div>
         <div class="it"><i>03</i><div><div class="t">Conectividad inmediata</div><div class="d">Acceso directo a la Av. León Febres Cordero, con conexión a la Vía a Samborondón y a Ciudad Celeste.</div></div></div>
       </div>
     </div>
@@ -75,30 +75,30 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
       <div><img src="${I.g3}" alt="Club House"><div class="cap">Club House</div></div>
     </div>
   </div>
-  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Promotora Batán Este Probaeste S.A.S.<br>Km 6.8 Vía La Puntilla · Samborondón · (593-4) 510 9060</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
+  <div class="foot"><div class="lg"><img src="${I.ritofa}" alt="RITOFA"><i></i><img class="bt" src="${I.batan}" alt="Batán Proyectos Inmobiliarios"></div><div class="t">Promotora Batán Este Probaeste S.A.S.<br>km 6.8 Vía La Puntilla · Samborondón · (593-4) 510 9060</div><div class="p">${e(c.numero)} · 01 / 02</div></div>
 </section>
 <section class="page">
-  <div class="bar light"><img src="${I.logoDark}" alt="Aires Este"><div class="r sk">Solar ${e(u.num)} · Cotización ${e(c.numero)}</div></div>
+  <div class="bar light"><img src="${I.logoDark}" alt="Aires Este"><div class="r sk">Solar ${e(u.num)} · COTIZACIÓN ${e(c.numero)}</div></div>
   <div class="body" style="padding-top:16px">
     <div class="st"><img src="${I.icon}" alt=""><h2>Ubicación en el masterplan</h2></div>
     <div class="map"><img src="${c.plan||I.masterplan}" alt="Masterplan"><div class="row"><div class="cap">${e(sector)} · Manzana ${e(mz)} · Solar ${e(u.num)}</div><div class="cap">Implantación referencial</div></div></div>
     <div class="st" style="margin-top:14px"><img src="${I.icon}" alt=""><h2>Forma de pago</h2></div>
     ${pago}
     <div class="st" style="margin-top:14px"><img src="${I.icon}" alt=""><h2>El proyecto</h2></div>
-    <p class="p"><b>Aires Este Residencial</b> es una urbanización privada de villas en Samborondón, Km 6.8 Vía La Puntilla, con acceso directo a la Av. León Febres Cordero y conexión inmediata a la Vía a Samborondón y a Ciudad Celeste. El masterplan integra <b>Club House</b> con piscinas y gimnasio, <b>parque central</b> con lago y boulevard arbolado, y un <b>Town Center</b> con paseo comercial y gastronómico y supermercado.</p>
+    <p class="p"><b>Aires Este Residencial</b> es una urbanización privada de villas en Samborondón, km 6.8 Vía La Puntilla, con acceso directo a la Av. León Febres Cordero y conexión inmediata a la Vía a Samborondón y a Ciudad Celeste. El masterplan integra <b>Club House</b> con piscinas y gimnasio, <b>parque central</b> con lago y bulevar arbolado, y un <b>Town Center</b> con paseo comercial y gastronómico y supermercado.</p>
     <div class="st" style="margin-top:14px"><img src="${I.icon}" alt=""><h2>Condiciones generales</h2></div>
     <div class="cond light">
-      <div class="it"><i>01</i><div>Valores en dólares de los EE.UU. a precio de lista vigente a la fecha de esta cotización, sujetos a cambio sin previo aviso.</div></div>
+      <div class="it"><i>01</i><div>Valores en dólares de los EE. UU. a precio de lista vigente a la fecha de esta cotización, sujetos a cambio sin previo aviso.</div></div>
       <div class="it"><i>02</i><div>No incluyen gastos notariales, de escrituración, de registro ni impuestos aplicables.</div></div>
       <div class="it"><i>03</i><div>La reserva se formaliza con la <b>Solicitud de Reserva</b> y su documentación de respaldo; la venta, mediante <b>promesa de compraventa</b> y posterior escritura pública.</div></div>
-      <div class="it"><i>04</i><div>La unidad se entrega urbanizada. El adquirente se acoge a las <b>Normas Constructivas</b> y al Reglamento Interno de la urbanización; alícuotas y cuota de afiliación según el reglamento vigente.</div></div>
+      <div class="it"><i>04</i><div>La unidad se entrega urbanizada. El adquirente se acoge a las <b>Normas Constructivas</b> y al Reglamento Interno de la urbanización.</div></div>
       <div class="it"><i>05</i><div>La disponibilidad está sujeta a confirmación al momento de la reserva. Esta cotización no constituye reserva ni obligación de venta.</div></div>
     </div>
-    <p class="legal">Todas las ilustraciones son de carácter conceptual. Dimensiones y áreas son aproximadas y están sujetas a cambios sin noticia previa. Documento informativo; no constituye oferta vinculante. Asesor/a: ${e(c.asesor||'-')}.</p>
+    <p class="legal">Todas las ilustraciones son de carácter conceptual. Las dimensiones y áreas son aproximadas y están sujetas a cambios sin previo aviso. Documento informativo; no constituye oferta vinculante. Asesor/a: ${e(c.asesor||'-')}.</p>
   </div>
   <div class="back green">
     <img src="${I.logo}" alt="Aires Este">
     <div class="lg"><img src="${I.ritofa2}" alt="RITOFA"><i></i><img class="bt" src="${I.batan2}" alt="Batán Proyectos Inmobiliarios"></div>
-    <div class="a">Promotora Batán Este Probaeste S.A.S. &nbsp;|&nbsp; Km 6.8 Vía La Puntilla · Samborondón &nbsp;|&nbsp; (593-4) 510 9060 &nbsp;|&nbsp; 02 / 02</div>
+    <div class="a">Promotora Batán Este Probaeste S.A.S. &nbsp;|&nbsp; km 6.8 Vía La Puntilla · Samborondón &nbsp;|&nbsp; (593-4) 510 9060 &nbsp;|&nbsp; 02 / 02</div>
   </div>
 </section>`; }};
