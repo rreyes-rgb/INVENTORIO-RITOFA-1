@@ -763,7 +763,7 @@ function renderAli(){
   const terreno=P.kind!=="Oficinas", r2=v=>Math.round(v*100)/100;
   const base=r2(arr.reduce((a,x)=>a+(x.m2||0)+(terreno?0:(x.m2_balcon||0)),0));
   const rate=exc?arr[0].ali_m2:cfg.m2, ofi=exc?arr.reduce((a,x)=>a+x.alicuota,0):base*rate;
-  const npq=cfg.parqueo&&cfg.parqueo_m2?pqNum(arr):0, apq=npq*cfg.parqueo_m2*cfg.parqueo, tot=ofi+apq;
+  const npq=cfg.parqueo&&cfg.parqueo_m2?pqNum(arr):0, apq=npq?npq*cfg.parqueo_m2*cfg.parqueo:0, tot=ofi+apq;
   const lb=terreno?"Área del terreno":(arr.length>1?"Oficinas y balcones":"Oficina y balcón");
   box.innerHTML=`<div class="f-sec" style="margin-top:8px">Alícuota mensual estimada</div>
     <div class="f-row"><span class="k">${lb}</span><span class="v">${m2(base)}</span></div>
