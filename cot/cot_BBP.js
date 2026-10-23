@@ -6,6 +6,8 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
   const pisoTxt={'1':'Primer piso','2':'Segundo piso','3':'Tercer piso','4':'Cuarto piso'}[piso]||('Piso '+piso);
   const multi=c.n>1, nums=c.u.map(u=>u.num);
   const area=c.t.m2+c.t.m2_balcon+c.t.m2_terraza;
+  const pqv=`${c.pqn}${(c.pqc||[]).length?' ('+c.pqc.join(', ')+')':''}`;
+
   const PG=c.pg, P=c.t.precio, cuotas=Math.max(1,c.plazo||1);
   const pago=`<table class="plan pp"><thead><tr><th>Etapa</th><th class="r">%</th><th class="r">Valor</th></tr></thead><tbody>
     <tr><td>Reserva</td><td class="r">${Math.round(PG.reserva*100)} %</td><td class="r">${$(P*PG.reserva)}</td></tr>
@@ -45,14 +47,14 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <div class="c"><div class="l">Correo</div><div class="v">${e(c.cli.correo)}</div></div>
   </div>
   <div class="body">
-    <p class="intro">Estimado/a ${e(c.cli.nombre)}:<br>Presentamos la cotización de ${multi?c.n+' oficinas contiguas':'la oficina '+e(nums[0])} en el ${e(pisoTxt.toLowerCase())} de Batán Business Park, ${e(torre)}, con valores de la lista de precios vigente.</p>
+    <p class="intro">Estimado/a ${e(c.cli.nombre)}:<br>Presentamos la cotización de ${multi?c.n+' oficinas contiguas':'la oficina '+e(nums[0])} en el ${e(pisoTxt.toLowerCase())} de Batán Business Park, ${e(torre)}, con valores de la lista de precios vigente. El precio incluye ${c.pqn} parqueos${multi?' (dos por oficina)':''}.</p>
     <h2>Ficha de la ${multi?'propuesta':'oficina'}</h2>
     <table class="ficha"><tbody>
       <tr><td class="k">Proyecto</td><td class="v">Batán Business Park</td><td class="k">Promotora</td><td class="v">TECHCORP S.A.S.</td></tr>
       <tr><td class="k">Ubicación</td><td class="v">km 8.5 Vía a Samborondón</td><td class="k">Nivel</td><td class="v">${e(pisoTxt)}</td></tr>
       <tr><td class="k">${multi?'Oficinas':'Oficina'}</td><td class="v">${e(nums.join(', '))}</td><td class="k">Área de oficina${multi?'s':''}</td><td class="v">${n2(c.t.m2)} m²</td></tr>
       <tr><td class="k">${c.t.m2_terraza?'Terraza':'Balcón'}</td><td class="v">${c.t.m2_balcon||c.t.m2_terraza?n2(c.t.m2_balcon||c.t.m2_terraza)+' m²':'No aplica'}</td><td class="k">Tipo</td><td class="v">${e(u0.tipo||'Oficina')}</td></tr>
-      <tr><td class="k"></td><td class="v"></td><td class="k">Valor total</td><td class="v"><b>${$(c.t.precio)}</b></td></tr>
+      <tr><td class="k">Parqueos incluidos</td><td class="v">${e(pqv)}</td><td class="k">Valor total</td><td class="v"><b>${$(c.t.precio)}</b></td></tr>
     </tbody></table>
     <h2>Ubicación en el ${e(pisoTxt.toLowerCase())}</h2>
     <div class="plano"><img src="${c.plan}" alt="Planta" style="height:62mm;width:auto;max-width:100%"></div>
@@ -73,6 +75,7 @@ build:function(c,I){ const $=c.$, e=c.e, n2=c.n2;
     <h2>Condiciones generales</h2>
     <ul class="dots">
       <li>Valores en dólares de los Estados Unidos a precio de lista vigente, sujetos a cambio sin previo aviso.</li>
+      <li>El precio incluye dos (2) parqueos por oficina, asignados según el listado vigente del proyecto.</li>
       <li>No incluyen IVA ni gastos notariales, de escrituración o de inscripción en el Registro de la Propiedad.</li>
       <li>La reserva se formaliza con la Solicitud de Reserva y la documentación de respaldo, sujetas a revisión y aprobación.</li>
       <li>Las áreas son referenciales y están sujetas a los planos aprobados y a la declaratoria de propiedad horizontal.</li>
