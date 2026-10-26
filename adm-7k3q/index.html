@@ -466,7 +466,7 @@ html.big .admbadge{font-size:calc(11px*var(--k));padding:calc(5px*var(--k)) calc
     <div id="cotForm">
       <div class="cot-in">
         <label>Nombre completo<input id="cNom" autocomplete="off" autocapitalize="words" placeholder="Ej. María Pérez"></label>
-        <label>Cédula / RUC<input id="cCed" inputmode="numeric" autocomplete="off" placeholder="0912345678"></label>
+        <label>Cédula / RUC / Pasaporte<input id="cCed" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="0912345678"></label>
         <label>Celular<input id="cCel" type="tel" inputmode="tel" autocomplete="off" placeholder="0991234567"></label>
         <label>Correo<input id="cMail" type="email" inputmode="email" autocomplete="off" autocapitalize="off" placeholder="cliente@correo.com"></label>
         <label>Asesor/a<input id="cAse" autocomplete="off" autocapitalize="words" placeholder="Tu nombre"></label>
@@ -1006,9 +1006,13 @@ function cotOpen(){
   $("cotOv").classList.add("open"); $("cotSheet").scrollTop=0;
 }
 function cotClose(){ $("cotOv").classList.remove("open"); cotState=null; }
+/* Validación de cédula ecuatoriana (dígito verificador), RUC (13, termina en 001) o pasaporte (26/10/2026) */
+function cedOk(s){if(!/^\d{10}$/.test(s))return false;const p=+s.slice(0,2);if(!((p>=1&&p<=24)||p===30))return false;if(+s[2]>=6)return false;let t=0;for(let i=0;i<9;i++){let v=+s[i]*(i%2?1:2);if(v>9)v-=9;t+=v;}return (10-t%10)%10===+s[9];}
+function rucOk(s){if(!/^\d{13}$/.test(s)||!/001$/.test(s))return false;const p=+s.slice(0,2);if(!((p>=1&&p<=24)||p===30))return false;const d=+s[2];if(d<6)return cedOk(s.slice(0,10));return d===6||d===9;}
+function idOk(s){if(/^\d+$/.test(s)){if(s.length===10)return cedOk(s);if(s.length===13)return rucOk(s);return (s.length===8||s.length===9)&&!/^(\d)\1+$/.test(s)&&!/^(0?123456789|12345678|23456789)$/.test(s);}return /^[A-Za-z0-9]{6,20}$/.test(s)&&/[A-Za-z]/.test(s)&&/\d/.test(s);}
 function cotValid(c){
   if(c.nombre.length<3) return ["cNom","Escribe el nombre completo del cliente"];
-  if(!/^(\d{10}|\d{13}|[A-Za-z0-9]{6,20})$/.test(c.cedula)) return ["cCed","Cédula (10 dígitos), RUC (13) o pasaporte"];
+  if(!idOk(c.cedula)) return ["cCed","Cédula o RUC no válido: revisa los dígitos. Si es extranjero, escribe el pasaporte."];
   if(!/^\+?\d{9,15}$/.test(c.celular)) return ["cCel","Celular: solo números, ej. 0991234567"];
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c.correo)) return ["cMail","Correo no válido"];
   return null;
