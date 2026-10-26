@@ -313,8 +313,48 @@ html.big #ficha>.f-actions{grid-column:1/3;grid-row:8}
 @media(max-width:700px){.bigbtn{display:none}}
 html.big .toast{font-size:calc(16px*var(--k));padding:calc(12px*var(--k)) calc(20px*var(--k))}
 </style>
+<style id="vendGateCss">
+#vendGate{position:fixed;inset:0;z-index:999;background:radial-gradient(120% 80% at 50% 0%,#1B402D,#0E1A14 70%);display:flex;align-items:center;justify-content:center;padding:24px;overflow:auto}
+#vendGate .box{width:100%;max-width:360px;text-align:center;color:#F5F0E8;font-family:var(--ui)}
+#vendGate .k{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--oro);font-weight:700}
+#vendGate h1{font-family:var(--serif);font-weight:600;font-size:30px;margin:6px 0 6px}
+#vendGate p{color:var(--mid);font-size:14px;margin:0 0 20px}
+#vendGate input{width:100%;height:54px;border-radius:14px;border:1px solid var(--border2);background:#0E1A14;color:#fff;font-family:var(--mono);font-size:17px;padding:0 14px;outline:none;margin-bottom:10px;box-sizing:border-box}
+#vendGate input:focus{border-color:var(--oro)}
+#vendGate button{width:100%;height:52px;border-radius:14px;border:1px solid var(--oro);background:#1B402D;color:#F5F0E8;font-weight:700;font-size:16px;letter-spacing:.5px;font-family:var(--ui)}
+#vendGate .err{min-height:20px;margin-top:10px;color:#ff9b9b;font-size:14px}
+#cAse[readonly]{opacity:.85;pointer-events:none}
+</style>
 </head>
 <body>
+<div id="vendGate"><form class="box" id="vgForm" autocomplete="on">
+  <div class="k">RITOFA · Inventario</div><h1>Acceso</h1><p>Ingresa con tu correo y tu clave</p>
+  <input id="vgMail" type="email" inputmode="email" autocomplete="username" autocapitalize="off" placeholder="Correo">
+  <input id="vgPass" type="password" autocomplete="current-password" autocapitalize="off" placeholder="Clave">
+  <button type="submit">Entrar</button><div class="err" id="vgErr"></div>
+</form></div>
+<script>
+(function(){
+  var U={"malvarez@multiraices.com.ec":{"n":"MERCEDES ÁLVAREZ","h":"ced4b951d9de73723c6063cbd81f4c334cb79a327faa74345e57e274cc52761a"},"dgomez@multiraices.com.ec":{"n":"DANIELA GÓMEZ","h":"e491d0c16b24d331245cb5ec000b46956e83ceaa72b91541ccab776bdffcde51"},"mgavilanes@multiraices.com.ec":{"n":"MARÍA BELÉN GAVILANEZ","h":"f610b5bba3ee9d455d711e8bd0b803fd64b2d86e557c34c7c018c17d1ea1875c"},"despana@multiraices.com.ec":{"n":"DOMÉNICA ESPAÑA","h":"cba8f6999d3874d1d927712b9d3e55c656871956ccc3972b262ee570ac669aaa"},"gerencia.comercial@multiraices.com.ec":{"n":"GIOVANNI BURGOS","h":"a53d2b2aed1e3142b32a770b2e4908f0dae64a44e3c13a7befa5da84e538735c"},"proyectosbatan@emetres.com.ec":{"n":"ADRIANA SANTELLI","h":"60242b4107ef16bab5757c790f7dbe0d5f212e18ebf346d705025f726862ec04"},"monibejarano@hotmail.com":{"n":"MÓNICA BEJARANO","h":"4f1467a201645f858977ab41a6a11ee087a1b4f532b28aef426d05e1401b0c57"},"rreyes@ritofa.com.ec":{"n":"RAFAEL REYES","h":"1ae276c4573893c5daf8736663e42b4a87688f766fbdb17421b83439c19d134c"},"marcobastidast@ritofa.com.ec":{"n":"MARCO BASTIDAS","h":"347756e07a2335ce4334d2342af93dba244158ebf35644693ef788e81eb389b4"},"candrade@ritofa.com.ec":{"n":"CARLOS ANDRADE","h":"f8ecea4ec0f4d1d93819778913d56721493bd3e904b54839cd19701bcc2c4f6a"}}, KEY="ritofa_vend", g=document.getElementById("vendGate");
+  function fijar(c){ var n=U[c].n;
+    try{localStorage.setItem("ritofa_cot_asesor",n);}catch(e){}
+    function f(){ var a=document.getElementById("cAse"); if(a){a.value=n;a.readOnly=true;a.title="Sesión de "+c;} }
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",f); else f();
+    window.RITOFA_USER={correo:c,nombre:n}; }
+  function ok(c){ fijar(c); g&&g.parentNode&&g.parentNode.removeChild(g); }
+  try{ var s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s&&U[s.c]&&U[s.c].h===s.h){ ok(s.c); return; } localStorage.removeItem(KEY);}catch(e){}
+  async function sha(t){ var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join(""); }
+  document.getElementById("vgForm").addEventListener("submit",async function(ev){ ev.preventDefault();
+    var c=document.getElementById("vgMail").value.trim().toLowerCase(), p=document.getElementById("vgPass").value.trim().toLowerCase(), er=document.getElementById("vgErr");
+    if(!U[c]){ er.textContent="Este correo no tiene acceso. Escribe a RITOFA."; return; }
+    var h=await sha(c+"|"+p);
+    if(h!==U[c].h){ er.textContent="Clave incorrecta"; document.getElementById("vgPass").value=""; return; }
+    try{localStorage.setItem(KEY,JSON.stringify({c:c,h:h}));}catch(e){}
+    ok(c); });
+  setTimeout(function(){ var i=document.getElementById("vgMail"); i&&i.focus(); },50);
+})();
+</script>
 
 <header class="top">
   <button class="back hidden" id="btnBack" aria-label="Volver">‹</button>
