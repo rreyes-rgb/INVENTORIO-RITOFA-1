@@ -954,7 +954,7 @@ async function cotAssets(pid){
   const jobs=[];
   if(!(window.jspdf&&window.jspdf.jsPDF)) jobs.push(loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"));
   if(!window.html2canvas) jobs.push(loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"));
-  if(!(window.COT_TPL&&window.COT_TPL[pid])) jobs.push(loadScript((COT.assets||"cot/")+"cot_"+pid+".js?v="+encodeURIComponent(DATA.generado||"")));
+  if(!(window.COT_TPL&&window.COT_TPL[pid])) jobs.push(loadScript((COT.assets||"cot/")+"cot_"+pid+".js?v="+encodeURIComponent((DATA.generado||"")+"-i1")));
   await Promise.all(jobs);
 }
 async function cotPost(body){
@@ -988,6 +988,16 @@ function planCrop(units){
       g.lineWidth=lw; g.strokeStyle="#E8B04A"; g.strokeRect(rx,ry,rw,rh); });
     ok(c.toDataURL("image/jpeg",.9)); }; im.onerror=()=>ok(null); im.src=src; });
 }
+/* AETC: sombrea en la implantación el edificio de la oficina (29/10/2026). E2.3: número = bloque a, letra = bloque b. E3.1 sin sombrear (pendiente). */
+const IMPL_ZONAS={"E2.1":[[366,174],[629,197],[619,300],[358,271]],"E2.2":[[682,230],[917,342],[876,450],[642,315]],"E2.3a":[[967,400],[1101,432],[1085,679],[962,650],[982,498],[1000,480],[965,461]],"E2.3b":[[937,702],[1075,732],[1052,845],[927,820]],"E3.2":[[1602,507],[1820,517],[1816,611],[1600,602]],"E3.3":[[1885,530],[2087,602],[2062,692],[1855,617]]};
+function implZona(u){ const m=String(u.id).match(/^OF-(E\d\.\d)-\d+-(.+)$/); if(!m) return null; const ed=m[1], letra=/^[A-Za-z]$/.test(m[2]);
+  if(ed==="E2.3") return letra?"E2.3b":"E2.3a"; return IMPL_ZONAS[ed]?ed:null; }
+function implMarcar(src,units){ const ks=[...new Set(units.map(implZona).filter(Boolean))]; if(!src||!ks.length) return Promise.resolve(null);
+  return new Promise(ok=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=im.naturalWidth; c.height=im.naturalHeight;
+    const g=c.getContext("2d"), k=im.naturalWidth/2400; g.drawImage(im,0,0);
+    ks.forEach(key=>{ const p=IMPL_ZONAS[key]; g.beginPath(); p.forEach((q,i)=>g[i?"lineTo":"moveTo"](q[0]*k,q[1]*k)); g.closePath();
+      g.fillStyle="rgba(71,104,89,.45)"; g.fill(); g.lineWidth=5*k; g.strokeStyle="#476859"; g.stroke(); });
+    ok(c.toDataURL("image/jpeg",.9)); }; im.onerror=()=>ok(null); im.src=src; }); }
 function cotCtx(units,numero,fecha,cli,asesor,plan){
   const t=totales(units), d=new Date();
   const nums=units.map(u=>String(u.num).replace(/^OF\s*/,""));
@@ -1002,7 +1012,7 @@ async function cotRender(tpl,ctx){
   document.body.appendChild(fr);
   try{
     const doc=fr.contentDocument; doc.open();
-    doc.write(`<!doctype html><html><head><meta charset="utf-8"><style>${tpl.css}</style></head><body>${tpl.build(ctx,tpl.I)}</body></html>`); doc.close();
+    doc.write(`<!doctype html><html><head><meta charset="utf-8"><style>${tpl.css}</style></head><body>${tpl.build(ctx,ctx.I||tpl.I)}</body></html>`); doc.close();
     const imgs=[...doc.images]; await Promise.all(imgs.map(i=>i.complete&&i.naturalWidth?0:new Promise(r=>{i.onload=i.onerror=r;})));
     try{ await doc.fonts.ready; }catch(e){} await new Promise(r=>setTimeout(r,120));
     // html2canvas no respeta object-fit:cover: se recorta cada imagen a su caja antes de capturar
@@ -1072,6 +1082,7 @@ async function cotGenerar(){
     if(st.offline){ let q=[]; try{ q=JSON.parse(lsGet(COT_PEND)||"[]"); }catch(e){} q.push(Object.assign({},reg,{observaciones:(obs?obs+" · ":"")+"Registrada sin conexión"})); lsSet(COT_PEND,JSON.stringify(q)); }
     msg.textContent="Armando el PDF…"; await pAssets; const plan=await pPlan;
     const tpl=window.COT_TPL[P.id]; const ctx=cotCtx(units,numero,fecha,cli,asesor,plan);
+    if(P.id==="AETC"){ const imI=await implMarcar(tpl.I.implantacion,units); if(imI) ctx.I=Object.assign({},tpl.I,{implantacion:imI}); }
     const pdf=await cotRender(tpl,ctx);
     const nombre=`${numero} ${P.id} ${units.map(u=>u.num).join("+")} - ${cli.nombre}`.replace(/[\\/:*?"<>|]+/g,"-").slice(0,110)+".pdf";
     const blob=pdf.output("blob"); st.file=new File([blob],nombre,{type:"application/pdf"}); st.blob=blob;
